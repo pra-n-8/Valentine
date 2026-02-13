@@ -8,21 +8,22 @@ export default function ValentineApp() {
   const [step, setStep] = useState(0);
   const [noButtons, setNoButtons] = useState([{ top: 50, left: 50, id: 0 }]);
   const [accepted, setAccepted] = useState(false);
+  const [showSecret, setShowSecret] = useState(false);
+  const [password, setPassword] = useState("");
 
   const messages = [
-    "Hey! Ritika 👀",
     "I think you deserve this....",
+    "You make me smile every day 😄",
     "Okay don’t overthink this...",
-    "I promise it’ll be fun 😏",
-    "I’ve been waiting to ask you 💌",
     "Will you be my Valentine? ❤️",
+    "I promise it’ll be fun 😏",
+    "I’ve been waiting to ask you 💌"
   ];
 
   const handleYes = () => {
     setAccepted(true);
   };
 
-  // Add floating hearts or stars near No button
   const addFloatingEmoji = () => {
     const emoji = document.createElement('div');
     emoji.innerText = ['💖','✨','🌸','💌'][Math.floor(Math.random()*4)];
@@ -40,10 +41,8 @@ export default function ValentineApp() {
     setNoButtons(prev => {
       const index = prev.findIndex(b => b.id === id);
       if(index === -1) return prev;
-      // remove original button
       const newButtons = [...prev];
       newButtons.splice(index,1);
-      // add 3 tiny buttons in random positions
       const extra = Array.from({length:3}).map((_,i) => ({
         id: Date.now() + i,
         top: Math.random()*70 + 10,
@@ -53,6 +52,14 @@ export default function ValentineApp() {
     });
   };
 
+  const checkPassword = () => {
+    if(password.toUpperCase() === 'RITOCIKA') {
+      setShowSecret(true);
+    } else {
+      alert('Wrong code 😅');
+    }
+  };
+
   return (
     <>
       <Head>
@@ -60,7 +67,27 @@ export default function ValentineApp() {
       </Head>
       <div className="min-h-screen bg-gradient-to-br from-rose-100 to-purple-100 flex items-center justify-center p-4 relative overflow-hidden">
         <div className="w-full max-w-md text-center shadow-2xl rounded-3xl bg-white p-8 flex flex-col items-center gap-6 relative border border-rose-200">
-          {!accepted ? (
+
+          {!showSecret && (
+            <div className="flex flex-col gap-4">
+              <h2 className="text-purple-800 text-lg font-bold">Enter our secret code to continue… 😏</h2>
+              <input 
+                type="text" 
+                value={password} 
+                onChange={(e) => setPassword(e.target.value)}
+                className="border border-purple-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
+                placeholder="Secret code..." 
+              />
+              <button 
+                onClick={checkPassword}
+                className="bg-purple-600 text-white rounded-2xl px-6 py-2 hover:bg-purple-700 transition"
+              >
+                Enter 💌
+              </button>
+            </div>
+          )}
+
+          {showSecret && !accepted && (
             <>
               <motion.h1
                 key={step}
@@ -72,7 +99,7 @@ export default function ValentineApp() {
                 {messages[step]}
               </motion.h1>
 
-              {step < 5 ? (
+              {step < messages.length - 1 ? (
                 <button
                   onClick={() => setStep(step + 1)}
                   className="rounded-2xl text-lg px-6 py-3 bg-purple-600 text-white hover:bg-purple-700 transition"
@@ -110,7 +137,9 @@ export default function ValentineApp() {
                 </div>
               )}
             </>
-          ) : (
+          )}
+
+          {accepted && (
             <div className="flex flex-col items-center gap-6 relative w-full">
               {Array.from({ length: 30 }).map((_, i) => (
                 <motion.div
