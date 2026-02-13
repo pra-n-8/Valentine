@@ -12,12 +12,13 @@ export default function ValentineApp() {
   const [password, setPassword] = useState("");
 
   const messages = [
+    "Hey! Ritika",
     "I think you deserve this....",
     "You make me smile every day 😄",
     "Okay don’t overthink this...",
-    "Will you be my Valentine? ❤️",
     "I promise it’ll be fun 😏",
-    "I’ve been waiting to ask you 💌"
+    "I’ve been waiting to ask you 💌",
+    "Will you be my Valentine? ❤️",
   ];
 
   const handleYes = () => {
@@ -53,7 +54,7 @@ export default function ValentineApp() {
   };
 
   const checkPassword = () => {
-    if(password.toUpperCase() === 'RITOXICA') {
+    if(password.toUpperCase() === 'RITOXICKA') {
       setShowSecret(true);
     } else {
       alert('Wrong code 😅');
