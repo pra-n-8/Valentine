@@ -53,7 +53,7 @@ export default function ValentineApp() {
   };
 
   const checkPassword = () => {
-    if(password.toUpperCase() === 'RITOCIKA') {
+    if(password.toUpperCase() === 'RITOXICA') {
       setShowSecret(true);
     } else {
       alert('Wrong code 😅');
@@ -75,7 +75,7 @@ export default function ValentineApp() {
                 type="text" 
                 value={password} 
                 onChange={(e) => setPassword(e.target.value)}
-                className="border border-purple-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
+                className="border border-purple-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400 text-black"
                 placeholder="Secret code..." 
               />
               <button 
